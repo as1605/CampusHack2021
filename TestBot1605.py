@@ -29,10 +29,15 @@ async def on_message(message):
             "CompilerArgs": "source_file.cpp -o a.out"
         }
         rep = requests.post(url, data=req).json()
-        await message.channel.send("```"+rep.get("Result")+"```")
-        await message.channel.send("```Warnings: "+rep.get("Warnings")+"```")
-        await message.channel.send("```Errors: "+rep.get("Errors")+"```")
-        await message.channel.send("```Stats: "+rep.get("Stats")+"```")
-        await message.channel.send("```Files: "+rep.get("Files")+"```")
+        if (type(rep.get("Result"))==str):
+            await message.channel.send("```"+rep.get("Result")+"```")
+        if (type(rep.get("Warnings"))==str):
+            await message.channel.send("```Warnings: "+rep.get("Warnings")+"```")
+        if (type(rep.get("Stats"))==str):      
+            await message.channel.send("```Stats: "+rep.get("Stats")+"```")
+        if (type(rep.get("Errors"))==str):      
+            await message.channel.send("```Errors: "+rep.get("Errors")+"```")
+        if (type(rep.get("Files"))==str):      
+            await message.channel.send("```Files: "+rep.get("Files")+"```")
 
 client.run("ODE3MzgwODcxNDU1Mzc1NDAw.YEIrQQ.gxw6UTKW7hXMWBckARswyg-FKpE")
