@@ -10,3 +10,5 @@ g++
 <input text>
 ```txt
 ```
+
+![Example](/Demo.png)
