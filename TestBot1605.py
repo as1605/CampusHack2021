@@ -19,6 +19,21 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    if message.content.startswith("```Errors:"):
+        err = message.content.split("Errors:")[1]
+        err = err.split('```')[0]
+        link="https://api.stackexchange.com/2.2/search/advanced"
+        args= {
+            "order" : "desc",
+            "sort" : "votes",
+            "q" : err,
+            "site" : "stackoverflow"
+        }
+        stack=requests.get(url=link, params=args)
+        ans=stack.json()
+        await message.channel.send(ans["items"][0]["link"])
+        await message.channel.send(ans["items"][1]["link"])
+        await message.channel.send(ans["items"][2]["link"])
     if message.author == client.user:
         return
     if (message.author.nick==None):
@@ -59,6 +74,14 @@ async def on_message(message):
                 o = urllib.parse.urlparse(url)
                 d = urllib.parse.parse_qs(o.query)
                 await message.channel.send(d['uddg'][0])
-            
-
+                    if (type(rep.get("Result"))==str):
+            await message.channel.send("```"+rep.get("Result")[:1000]+"```")
+        if (type(rep.get("Warnings"))==str):
+            await message.channel.send("```Warnings: "+rep.get("Warnings")[:1000]+"```")
+        if (type(rep.get("Stats"))==str):      
+            await message.channel.send("```Stats: "+rep.get("Stats")[:1000]+"```")
+        if (type(rep.get("Errors"))==str):      
+            await message.channel.send("```Errors: "+rep.get("Errors")[:1000]+"```")
+        if (type(rep.get("Files"))==str):      
+            await message.channel.send("```Files: "+rep.get("Files")[:1000]+"```")
 client.run("ODE3MzgwODcxNDU1Mzc1NDAw.YEIrQQ.gxw6UTKW7hXMWBckARswyg-FKpE")
