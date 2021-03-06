@@ -72,6 +72,18 @@ def rex(code, inp, plat='g++'):
         a["Files"]=None
     return a
 
+def github(user,repo,branch,path,beg,end):
+    link="https://raw.githubusercontent.com"
+    link=link+'/'+user+'/'+repo+'/'+branch+'/'+path
+    response=requests.get(url=link)
+    response=response.content.splitlines()
+    a=[]
+    i=beg
+    while (i<len(response)-1 and i<=end):
+        a.append(f"{i}|"+str(response[i]))
+        i+=1
+    return a
+
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
@@ -85,19 +97,36 @@ async def on_message(message):
     if message.content.lower().find('nice')>=0:
         await message.channel.send('nice')
     
-    if message.content.startswith("stack"):
+    if message.content.lower().startswith("stack"):
         str = message.content.split("stack")[1]
         ques=stack(str)
         for q in ques:
             await message.channel.send(q[:2000])
 
-    if message.content.startswith("duck"):
+    if message.content.lower().startswith("duck"):
         str = message.content.split("duck")[1]
         ques=duck(str)
         for q in ques:
             await message.channel.send(q[:2000])
 
-    if message.content.startswith("g++"):
+    if message.content.lower().startswith("github"):
+        str = message.content.split(" ")
+        user = str[1]
+        repo = str[2]
+        branch=str[3]
+        path=str[4]
+        beg=int(str[5])
+        end=int(str[6])
+        lines=github(user,repo,branch,path,beg,end)
+        ext=path.split('.')[-1]
+        out="```"+ext
+        for line in lines:
+            newline = '\n'
+            out+=f'{newline}{line}'
+        out+="```"
+        await message.channel.send(out[:2000])
+
+    if message.content.lower().startswith("g++"):
         judge= rex(message.content.split("```c++")[1],message.content.split("```txt")[1],"g++")
         if judge["Result"]!=None:
             await message.channel.send("```"+judge["Result"][:2000]+"```")
