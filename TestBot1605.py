@@ -84,6 +84,18 @@ def github(user,repo,branch,path,beg,end):
         i+=1
     return a
 
+def codechef(id,beg,end):
+    link="https://www.codechef.com/viewplaintext/"
+    link+=str(id)
+    response=requests.get(url=link)
+    response=response.content.splitlines()
+    a=[]
+    i=beg
+    while (i<len(response)-1 and i<=end):
+        a.append(f"{i}|"+str(response[i]))
+        i+=1
+    return a
+
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
@@ -120,6 +132,21 @@ async def on_message(message):
         lines=github(user,repo,branch,path,beg,end)
         ext=path.split('.')[-1]
         out="```"+ext
+        for line in lines:
+            newline = '\n'
+            out+=f'{newline}{line}'
+        out+="```"
+        await message.channel.send(out[:2000])
+    
+    if message.content.lower().startswith("codechef"):
+        str = message.content.split(" ")
+        id = str[1]
+        beg = int(str[2])
+        end = int(str[3])
+        lines=codechef(id,beg,end)
+        out="```"
+        if (len(str)>4):
+            out+=str[4]
         for line in lines:
             newline = '\n'
             out+=f'{newline}{line}'
