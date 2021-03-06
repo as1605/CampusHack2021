@@ -15,6 +15,7 @@ language_array = [
 ]
 
 TOKEN="ODEwODY5MjEyNDA2NjEyMDU4.YCp6zQ.9FjMI0Vf4I3rs86iERSXJCvjTPI"
+
 client = discord.Client()
 
 def stack(q, n=3):
@@ -209,6 +210,7 @@ async def on_message(message):
 
 
         judge= rex(message.content.split("```"+language_name)[1],message.content.split("```txt")[1],compiler)
+
         if judge["Result"]!=None:
             await message.channel.send("```"+judge["Result"][:2000]+"```")
         if judge["Warnings"]!=None:
@@ -222,6 +224,7 @@ async def on_message(message):
 
         if judge["Errors"]!=None:
             err = find_error(judge["Errors"],index)
+
             ques=stack(err)
             for q in ques:
                 await message.channel.send(q[:2000])
