@@ -72,6 +72,16 @@ def rex(code, inp, plat='g++'):
         a["Files"]=None
     return a
 
+def clean(str):
+    line=""
+    for i in range(len(str)):
+        line+=chr(str[i])
+    line=line.replace("&amp;","&")
+    line=line.replace("&lt;","<")
+    line=line.replace("&gt;",">")
+    line=line.replace("&quot;","\"")
+    return line
+
 def github(user,repo,branch,path,beg,end):
     link="https://raw.githubusercontent.com"
     link=link+'/'+user+'/'+repo+'/'+branch+'/'+path
@@ -80,7 +90,7 @@ def github(user,repo,branch,path,beg,end):
     a=[]
     i=beg
     while (i<len(response)-1 and i<=end):
-        a.append(f"{i}|"+str(response[i]))
+        a.append(f"{i}|"+clean(response[i]))
         i+=1
     return a
 
@@ -92,7 +102,7 @@ def codechef(id,beg,end):
     a=[]
     i=beg
     while (i<len(response)-1 and i<=end):
-        a.append(f"{i}|"+str(response[i]))
+        a.append(f"{i}|"+clean(response[i]))
         i+=1
     return a
 
