@@ -3,8 +3,19 @@ import requests
 import json
 from bs4 import BeautifulSoup
 import urllib.parse
+import re
 
-TOKEN="ODE3MzgwODcxNDU1Mzc1NDAw.YEIrQQ.dXNWOi9Dvv3ePnebssNsFl1Igow"
+#lang_number[0],lang_name[1],lang_compiler[2],compiler_arguement[3]
+language_array = [
+    ["1","c#","csc","source_file.cs -out:main.exe"],
+    ["4","java","javac","Rextester.java"],
+    ["5","python","python",""],
+    ["6","c","gcc","source_file.c -o a.out"],
+    ["7","c++","g++","source_file.cpp -o a.out"]
+]
+
+TOKEN="ODEwODY5MjEyNDA2NjEyMDU4.YCp6zQ.9FjMI0Vf4I3rs86iERSXJCvjTPI"
+
 client = discord.Client()
 
 def stack(q, n=3):
@@ -42,11 +53,12 @@ def duck(str, n=5):
 
 def rex(code, inp, plat='g++'):
     link='https://rextester.com/rundotnet/api'
+    index = find_index(plat)
     args= {
-        "LanguageChoice": 7,
+        "LanguageChoice": int(language_array[index][0]),
         "Program": code,
         "Input": inp,
-        "CompilerArgs": "source_file.cpp -o a.out"
+        "CompilerArgs": language_array[index][3]
     }
     response = requests.post(link, data=args).json()
     a={}
@@ -93,6 +105,31 @@ def github(user,repo,branch,path,beg,end):
         a.append(f"{i}|"+clean(response[i]))
         i+=1
     return a
+
+def find_index(compiler_name):
+    compiler_array = []
+    for i in range(len(language_array)):
+        compiler_array.append(language_array[i][2])
+    index = compiler_array.index(compiler_name)
+    return index
+# c# , java , python, c , c++
+def find_error(full_error_string, index):
+    if index == 0:
+        pass
+    elif index == 1:
+        error_messages = re.split("error:|warning:",full_error_string)[1:]
+        for i in range(len(error_messages)):
+            error_messages[i] = error_messages[i].split('\n')[0]
+        full_error_string = ' '.join(error_messages)
+    elif index == 2:
+        pass
+    elif index == 3:
+        pass
+    elif index == 4:
+        err=full_error_string.split(':')
+        index=err.index(' error')
+        full_error_string=err[index+1]
+    return full_error_string
 
 def codechef(id,beg,end):
     link="https://www.codechef.com/viewplaintext/"
@@ -163,8 +200,17 @@ async def on_message(message):
         out+="```"
         await message.channel.send(out[:2000])
 
-    if message.content.lower().startswith("g++"):
-        judge= rex(message.content.split("```c++")[1],message.content.split("```txt")[1],"g++")
+    if any(message.content.startswith(language_array[index][2]) for index in range(len(language_array))):
+        compiler_name = message.content.split('\n')[0]
+        index = find_index(compiler_name)
+
+        language_name = language_array[index][1]
+        compiler = language_array[index][2]
+        compiler_arguement = language_array[index][3]
+
+
+        judge= rex(message.content.split("```"+language_name)[1],message.content.split("```txt")[1],compiler)
+
         if judge["Result"]!=None:
             await message.channel.send("```"+judge["Result"][:2000]+"```")
         if judge["Warnings"]!=None:
@@ -177,9 +223,8 @@ async def on_message(message):
             await message.channel.send("```Files: "+judge["Files"][:2000]+"```")
 
         if judge["Errors"]!=None:
-            err=judge["Errors"].split(':')
-            index=err.index(' error')
-            err=err[index+1]
+            err = find_error(judge["Errors"],index)
+
             ques=stack(err)
             for q in ques:
                 await message.channel.send(q[:2000])
