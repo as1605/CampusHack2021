@@ -4,6 +4,7 @@ import json
 from bs4 import BeautifulSoup
 import urllib.parse
 import re
+import random
 
 #lang_number[0],lang_name[1],lang_compiler[2],compiler_arguement[3]
 language_array = [
@@ -14,9 +15,14 @@ language_array = [
     ["7","c++","g++","source_file.cpp -o a.out"]
 ]
 
-TOKEN="ODEwODY5MjEyNDA2NjEyMDU4.YCp6zQ.9FjMI0Vf4I3rs86iERSXJCvjTPI"
+TOKEN="ODE3Mzk2Mzc4NjY0OTYwMDEw.YEI5sw.3d3walpoz04dSpMgF1m3GeuXG-s"
 
 client = discord.Client()
+
+def help(filename):
+    with open(filename) as f:
+        contents=f.read()
+        return contents
 
 def stack(q, n=3):
     link="https://api.stackexchange.com/2.2/search/advanced"
@@ -36,6 +42,14 @@ def stack(q, n=3):
             continue
     return a
 
+def findid_cc(handle,contest_name,problem_id):
+    url = 'https://www.codechef.com/'+contest_name+'/status/'+problem_id+'?sort_by=All&sorting_order=asc&language=All&status=All&handle='+handle+'&Submit=GO'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text,'lxml')
+    elements=soup.find_all('table',class_='dataTable')
+    sub_id=elements[0].tbody.find('td',{'width':'60'}).text
+    return sub_id
+
 def duck(str, n=5):
     r = requests.get('https://duckduckgo.com/html/?q='+str, headers={'user-agent': 'my-app/0.0.1'}) 
     soup = BeautifulSoup(r.text, 'html.parser')
@@ -51,6 +65,28 @@ def duck(str, n=5):
             break
     return a
 
+def demo(s):
+    if s=='c':
+        with open('bot_c.txt') as f:
+            lines=f.read()
+            return lines
+    elif s=='c++':
+        with open('bot_c++.txt') as f:
+            lines=f.read()
+            return lines
+    elif s=='python':
+        with open('bot_python.txt') as f:
+            lines=f.read()
+            return lines
+    elif s=='c#':
+        with open('bot_c#.txt') as f:
+            lines=f.read()
+            return lines
+    elif s=='java':
+        with open('bot_java.txt') as f:
+            lines=f.read()
+            return lines
+        
 def rex(code, inp, plat='g++'):
     link='https://rextester.com/rundotnet/api'
     index = find_index(plat)
@@ -84,10 +120,10 @@ def rex(code, inp, plat='g++'):
         a["Files"]=None
     return a
 
-def clean(str):
+def clean(s):
     line=""
-    for i in range(len(str)):
-        line+=chr(str[i])
+    for i in range(len(s)):
+        line+=chr(s[i])
     line=line.replace("&amp;","&")
     line=line.replace("&lt;","<")
     line=line.replace("&gt;",">")
@@ -112,6 +148,14 @@ def find_index(compiler_name):
         compiler_array.append(language_array[i][2])
     index = compiler_array.index(compiler_name)
     return index
+
+def meme_me(num):
+    link = "https://xkcd.com/"+str(num)+"/info.0.json"
+    response=requests.get(link)
+    memes=response.json()        
+    return memes
+
+
 # c# , java , python, c , c++
 def find_error(full_error_string, index):
     if index == 0:
@@ -162,30 +206,50 @@ async def on_message(message):
 
     if message.author == client.user:
         return
+    if message.content.lower().find('$demo')>=0:
+        string =message.content.split('$demo ')[1]
+        lines =demo(string)
+        await message.channel.send(lines)
 
-    if message.content.lower().find('nice')>=0:
-        await message.channel.send('nice')
+    if message.content.lower().find('$comic')>=0:
+        num=random.randrange(1,1000,1)    
+        memes=meme_me(num)
+        num=memes['num']
+        
+        await message.channel.send('**#'+str(num)+' '+memes['title']+'**')
+        await message.channel.send(memes['img'])
+        await message.channel.send(memes['alt'])
+
+    if message.content.lower().find('$help')>=0:
+        with open('help.txt') as f:
+            lines=f.read()
+            await message.channel.send(lines)
+
+    if message.content.lower().find('$nice')>=0:
+        await message.channel.send('nice to meet you')
     
-    if message.content.lower().startswith("stack"):
-        str = message.content.split("stack")[1]
-        ques=stack(str)
+    if message.content.lower().startswith("$stack"):
+        s = message.content.split("$stack")[1]
+        ques=stack(s)
         for q in ques:
             await message.channel.send(q[:2000])
 
-    if message.content.lower().startswith("duck"):
-        str = message.content.split("duck")[1]
-        ques=duck(str)
+
+
+    if message.content.lower().startswith("$duck"):
+        s = message.content.split("$duck")[1]
+        ques=duck(s)
         for q in ques:
             await message.channel.send(q[:2000])
 
-    if message.content.lower().startswith("github"):
-        str = message.content.split(" ")
-        user = str[1]
-        repo = str[2]
-        branch=str[3]
-        path=str[4]
-        beg=int(str[5])
-        end=int(str[6])
+    if message.content.lower().startswith("$github"):
+        s = message.content.split(" ")
+        user = s[1]
+        repo = s[2]
+        branch=s[3]
+        path=s[4]
+        beg=int(s[5])
+        end=int(s[6])
         lines=github(user,repo,branch,path,beg,end)
         ext=path.split('.')[-1]
         out="```"+ext
@@ -195,15 +259,15 @@ async def on_message(message):
         out+="```"
         await message.channel.send(out[:2000])
     
-    if message.content.lower().startswith("codechef"):
-        str = message.content.split(" ")
-        id = str[1]
-        beg = int(str[2])
-        end = int(str[3])
+    if message.content.lower().startswith("$codechef"):
+        s = message.content.split(" ")
+        id = findid_cc(s[1],s[2],s[3])
+        beg = int(s[4])
+        end = int(s[5])
         lines=codechef(id,beg,end)
         out="```"
-        if (len(str)>4):
-            out+=str[4]
+        if (len(s)>4):
+            out+=s[4]
         for line in lines:
             newline = '\n'
             out+=f'{newline}{line}'
@@ -216,7 +280,7 @@ async def on_message(message):
 
         language_name = language_array[index][1]
         compiler = language_array[index][2]
-        compiler_arguement = language_array[index][3]
+        compiler_argument = language_array[index][3]
         if len(message.content.split("```"+language_name))>1:
             src=message.content.split("```"+language_name)[1].split("```")[0]
         else:

@@ -1,14 +1,12 @@
-gcc
-```c
-#include <stdio.h>
+csc
+```c#
 
+#include <stdio.h>
 int main()
 {
     printf("Hello World");
-
     return 0;
 }
-
-```c
+```c#
 ```txt
 6```txt

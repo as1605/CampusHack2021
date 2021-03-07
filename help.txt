@@ -1,0 +1,26 @@
+```txt
+I am a high quality compile,run,guide,play bot created to 'prettify' coding discussions.
+Code Compilation and Run: Available in 5 languages c#, java, python, c++, c
+To see a demo type $demo <language-name> 
+
+uh oh you did an error. No worries, our bot is here.
+You see solutions of those errors automatically.
+
+Not all of us are perfect. Doubts will still be there. 
+So to refer to stack overflow type $stack <your_doubt>
+To refer to cplusplus type $cplusplus <your_doubt>
+to refer to duck type $duck <your_doubt>
+
+Now you may need to refer to your submissions during discussions (to show off maybe? or to discuss)
+to refer to codechef any contest any submission
+type $codechef <your_username> <contest_id> <question_id> <beg> <end> <file_extension>
+eg $codechef <your_username> START1C COUPON2 6 20 cpp
+to refer to your github repo
+type $github <your_username> <repo_name> <branch> <path_to_file> <beg> <end>
+eg $github <your_username> Web-Scraping main Moodle/moodleLogin.py 1 20
+
+Tired of coding? Don't fret we have refreshments too.
+type $comic and see what happens XD
+
+Hope you enjoy your journey with me. :))
+```txt
