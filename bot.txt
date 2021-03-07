@@ -1,5 +1,5 @@
 g++
-```c++
+```
 #include<iostream>
 using namespace std;
 int main()
@@ -8,6 +8,6 @@ int main()
     cin>>c
     cout<<a+b+c<<endl;
 }
-```c++
+```
 ```txt
 6```txt
