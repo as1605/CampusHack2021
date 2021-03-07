@@ -190,11 +190,13 @@ def codechef(id,beg,end):
     link="https://www.codechef.com/viewplaintext/"
     link+=str(id)
     response=requests.get(url=link)
-    response=response.content.splitlines()
+    soup=BeautifulSoup(response.text,'lxml')
+    response=soup.find('pre').get_text()
+    response=response.splitlines()
     a=[]
     i=beg
     while (i<len(response)-1 and i<=end):
-        a.append(f"{i}|"+clean(response[i]))
+        a.append(f"{i}|"+response[i])
         i+=1
     return a
 

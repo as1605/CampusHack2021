@@ -26,4 +26,4 @@ Missing Youtube? I have it here for you too.
 type $youtube <search-query> and enjoy yourselves ;)
 
 Hope you enjoy your journey with me. :))
-```txt
+```
