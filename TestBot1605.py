@@ -15,6 +15,7 @@ language_array = [
 ]
 
 TOKEN="ODEwODY5MjEyNDA2NjEyMDU4.YCp6zQ.9FjMI0Vf4I3rs86iERSXJCvjTPI"
+
 client = discord.Client()
 
 def stack(q, n=3):
@@ -114,20 +115,30 @@ def find_index(compiler_name):
 # c# , java , python, c , c++
 def find_error(full_error_string, index):
     if index == 0:
-        pass
+        error_messages = full_error_string.split('\n')
+        for i in range(len(error_messages)):
+            error_messages[i] = error_messages[i][error_messages[i].index(')')+1:]
+            if(error_messages[i].endswith('\r')):
+                error_messages[i] = error_messages[i][:-1]
+        full_error_string = "c#" + error_messages[0]       
     elif index == 1:
         error_messages = re.split("error:|warning:",full_error_string)[1:]
         for i in range(len(error_messages)):
             error_messages[i] = error_messages[i].split('\n')[0]
-        full_error_string = ' '.join(error_messages)
+        full_error_string = error_messages[0]
     elif index == 2:
-        pass
+        full_error_string = "Python "+full_error_string.split('\n')[-2]
     elif index == 3:
-        pass
+        error_messages = full_error_string.split("error:")[1:]
+        for i in range(len(error_messages)):
+            error_messages[i] = error_messages[i].split('\n')[0]
+        full_error_string = error_messages[0]
     elif index == 4:
-        err=full_error_string.split(':')
-        index=err.index(' error')
-        full_error_string=err[index+1]
+        error_messages = full_error_string.split("error:")[1:]
+        for i in range(len(error_messages)):
+            error_messages[i] = error_messages[i].split('\n')[0]
+        full_error_string = error_messages[0]
+    print(full_error_string)
     return full_error_string
 
 def codechef(id,beg,end):
@@ -206,9 +217,16 @@ async def on_message(message):
         language_name = language_array[index][1]
         compiler = language_array[index][2]
         compiler_arguement = language_array[index][3]
+        if len(message.content.split("```"+language_name))>1:
+            src=message.content.split("```"+language_name)[1].split("```")[0]
+        else:
+            src=message.content.split("```")[1]
+        if len(message.content.split("```"))>3:
+            inp=message.content.split("```")[3]
+        else:
+            inp=""
+        judge= rex(src,inp,compiler)
 
-
-        judge= rex(message.content.split("```"+language_name)[1],message.content.split("```txt")[1],compiler)
         if judge["Result"]!=None:
             await message.channel.send("```"+judge["Result"][:2000]+"```")
         if judge["Warnings"]!=None:
@@ -222,6 +240,7 @@ async def on_message(message):
 
         if judge["Errors"]!=None:
             err = find_error(judge["Errors"],index)
+
             ques=stack(err)
             for q in ques:
                 await message.channel.send(q[:2000])
