@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 import urllib.parse
 import re
 from youtube_search import YoutubeSearch
+import os
+from decouple import config
 
 #lang_number[0],lang_name[1],lang_compiler[2],compiler_arguement[3]
 language_array = [
@@ -15,7 +17,7 @@ language_array = [
     ["7","c++","g++","source_file.cpp -o a.out"]
 ]
 
-TOKEN="ODEwODY5MjEyNDA2NjEyMDU4.YCp6zQ.9FjMI0Vf4I3rs86iERSXJCvjTPI"
+TOKEN=config("TOKEN")
 
 client = discord.Client()
 
