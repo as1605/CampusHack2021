@@ -1,7 +1,7 @@
 # Campus Hackathon 2021
 
 ## Meet Our Brand New Bot CodeAssist- The most powerful bot of the 21st century
-Developed with :heart: by @as1605 (Aditya Singh), @alexriderspy (Sreemanti Dey) and @awesomepaneer (Raj Shah) [Team Blind_Guess]
+Developed with :heart: by  [Aditya Singh](https://github.com/as1605/),  [Sreemanti Dey](https://github.com/alexriderspy/) and  [Raj Shah](https://github.com/awesomepaneer/) [Team Blind_Guess]
  
 
 ## To Host our Bot:
