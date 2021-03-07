@@ -1,13 +1,13 @@
 # Campus Hackathon 2021
 ## To Host our Bot:
 You need to install a number of packages:
-a. `pip install discord`
-b. `pip install bs4`
-c. `pip install youtube-search`
+* `pip install discord`
+* `pip install bs4`
+* `pip install youtube-search`
 ## Setup
-a. <b>As a developer</b>: Go to Discord Developers Portal and make your own bot. Then run the python code in your favourite editor with the token of your bot. 
-b. <b>As an admin of a server</b>: Invite the bot to your server. Simply get the invite link from the developer and you are done.
-c. <b>As an user</b>: You can type `$help` and you will get a list of instructions how to use our bot.
+* <b>As a developer</b>: Go to Discord Developers Portal and make your own bot. Then run the python code in your favourite editor with the token of your bot. 
+* <b>As an admin of a server</b>: Invite the bot to your server. Simply get the invite link from the developer and you are done.
+* <b>As an user</b>: You can type `$help` and you will get a list of instructions how to use our bot.
 ## How to Use
 Code Compilation and Run: Available in 5 languages c#, java, python, c++, c<br>
 To see a demo type `$demo <language-name>`
