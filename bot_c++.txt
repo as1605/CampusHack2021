@@ -1,13 +1,14 @@
 g++
-```
+\`\`\`c++
 #include<iostream>
 using namespace std;
-int main()
-{
+
+int main() {
     int a=5,b=6;
     cin>>c
     cout<<a+b+c<<endl;
 }
-```
-```txt
-6```txt
+\`\`\`
+\`\`\`
+6
+\`\`\`

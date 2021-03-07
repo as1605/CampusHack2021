@@ -1,6 +1,7 @@
 python
-```python
-print("hello")
-```python 
-```txt
--```txt
+\`\`\`python
+print("Hello World!")
+\`\`\`
+\`\`\`
+Input goes here
+\`\`\`

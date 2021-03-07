@@ -11,7 +11,7 @@ from decouple import config
 
 #lang_number[0],lang_name[1],lang_compiler[2],compiler_arguement[3]
 language_array = [
-    ["1","c#","csc","source_file.cs -out:main.exe"],
+    ["1","csharp","csc","source_file.cs -out:main.exe"],
     ["4","java","javac","Rextester.java"],
     ["5","python","python",""],
     ["6","c","gcc","source_file.c -o a.out"],
@@ -219,12 +219,12 @@ async def on_message(message):
 
     if message.author == client.user:
         return
-    if message.content.lower().find('$demo')>=0:
+    if message.content.lower().startswith("$demo"):
         string =message.content.split('$demo ')[1]
         lines =demo(string)
         await message.channel.send(lines)
 
-    if message.content.lower().find('$comic')>=0:
+    if message.content.lower().startswith("$comic"):
         num=random.randrange(1,1000,1)    
         memes=meme_me(num)
         num=memes['num']
@@ -233,7 +233,7 @@ async def on_message(message):
         await message.channel.send(memes['img'])
         await message.channel.send(memes['alt'])
 
-    if message.content.lower().find('$help')>=0:
+    if message.content.lower().startswith("$help"):
         with open('help.txt') as f:
             lines=f.read()
             await message.channel.send(lines)
@@ -246,8 +246,6 @@ async def on_message(message):
         ques=stack(s)
         for q in ques:
             await message.channel.send(q[:2000])
-
-
 
     if message.content.lower().startswith("$duck"):
         s = message.content.split("$duck")[1]
