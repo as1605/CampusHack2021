@@ -115,20 +115,30 @@ def find_index(compiler_name):
 # c# , java , python, c , c++
 def find_error(full_error_string, index):
     if index == 0:
-        pass
+        error_messages = full_error_string.split('\n')
+        for i in range(len(error_messages)):
+            error_messages[i] = error_messages[i][error_messages[i].index(')')+1:]
+            if(error_messages[i].endswith('\r')):
+                error_messages[i] = error_messages[i][:-1]
+        full_error_string = "c#" + error_messages[0]       
     elif index == 1:
         error_messages = re.split("error:|warning:",full_error_string)[1:]
         for i in range(len(error_messages)):
             error_messages[i] = error_messages[i].split('\n')[0]
-        full_error_string = ' '.join(error_messages)
+        full_error_string = error_messages[0]
     elif index == 2:
-        pass
+        full_error_string = "Python "+full_error_string.split('\n')[-2]
     elif index == 3:
-        pass
+        error_messages = full_error_string.split("error:")[1:]
+        for i in range(len(error_messages)):
+            error_messages[i] = error_messages[i].split('\n')[0]
+        full_error_string = error_messages[0]
     elif index == 4:
-        err=full_error_string.split(':')
-        index=err.index(' error')
-        full_error_string=err[index+1]
+        error_messages = full_error_string.split("error:")[1:]
+        for i in range(len(error_messages)):
+            error_messages[i] = error_messages[i].split('\n')[0]
+        full_error_string = error_messages[0]
+    print(full_error_string)
     return full_error_string
 
 def codechef(id,beg,end):
