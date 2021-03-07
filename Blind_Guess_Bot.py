@@ -6,8 +6,8 @@ import urllib.parse
 import re
 import random
 from youtube_search import YoutubeSearch
-import sys
 import os
+
 
 #lang_number[0],lang_name[1],lang_compiler[2],compiler_arguement[3]
 language_array = [
@@ -17,6 +17,8 @@ language_array = [
     ["6","c","gcc","source_file.c -o a.out"],
     ["7","c++","g++","source_file.cpp -o a.out"]
 ]
+
+TOKEN="ODE3Mzk2Mzc4NjY0OTYwMDEw.YEI5sw.GlkfZVczH7cZHRbQ8Vp4O57ZzHs"
 
 client = discord.Client()
 
@@ -156,6 +158,7 @@ def meme_me(num):
     memes=response.json()        
     return memes
 
+
 # c# , java , python, c , c++
 def find_error(full_error_string, index):
     if index == 0:
@@ -205,6 +208,7 @@ def youtube(search_query):
         link = "https://www.youtube.com" + url_suffix
         links.append(link)
     return links
+    
 
 @client.event
 async def on_ready():
@@ -215,7 +219,6 @@ async def on_message(message):
 
     if message.author == client.user:
         return
-
     if message.content.lower().startswith("$demo"):
         string =message.content.split('$demo ')[1]
         lines =demo(string)
@@ -225,6 +228,7 @@ async def on_message(message):
         num=random.randrange(1,1000,1)    
         memes=meme_me(num)
         num=memes['num']
+        
         await message.channel.send('**#'+str(num)+' '+memes['title']+'**')
         await message.channel.send(memes['img'])
         await message.channel.send(memes['alt'])
@@ -234,8 +238,8 @@ async def on_message(message):
             lines=f.read()
             await message.channel.send(lines)
 
-    if message.content.lower().find('$nice')>=0:
-        await message.channel.send('nice to meet you')
+    if message.content.lower().startswith('$hello'):
+        await message.channel.send('Hello! '+message.author.name+ " Nice to meet you")
     
     if message.content.lower().startswith("$stack"):
         s = message.content.split("$stack")[1]
@@ -293,7 +297,7 @@ async def on_message(message):
 
         language_name = language_array[index][1]
         compiler = language_array[index][2]
-        
+        #compiler_argument = language_array[index][3]
         if len(message.content.split("```"+language_name))>1:
             src=message.content.split("```"+language_name)[1].split("```")[0]
         else:
@@ -325,4 +329,4 @@ async def on_message(message):
             for link in links:
                 await message.channel.send(link[:2000])
 
-client.run(sys.argv[1])
+client.run(TOKEN)

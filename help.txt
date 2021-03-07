@@ -3,7 +3,7 @@ I am a high quality compile,run,guide,play bot created to 'prettify' coding disc
 Code Compilation and Run: Available in 5 languages c#, java, python, c++, c
 To see a demo type $demo <language-name> 
 
-uh oh you did an error. No worries, our bot is here.
+uh oh you did an error. No worries, I am here.
 You see solutions of those errors automatically.
 
 Not all of us are perfect. Doubts will still be there. 
@@ -19,8 +19,11 @@ to refer to your github repo
 type $github <your_username> <repo_name> <branch> <path_to_file> <beg> <end>
 eg $github <your_username> Web-Scraping main Moodle/moodleLogin.py 1 20
 
-Tired of coding? Don't fret we have refreshments too.
+Tired of coding? Don't fret I have refreshments too.
 type $comic and see what happens XD
+
+Missing Youtube? I have it here for you too.
+type $youtube <search-query> and enjoy yourselves ;)
 
 Hope you enjoy your journey with me. :))
 ```txt

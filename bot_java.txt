@@ -1,7 +1,8 @@
 javac
 \`\`\`java
-import java.util.*;
-import java.lang.*;
+import java.util.\*;
+
+import java.lang.\*;
  class Rextester
 { 
 public int a=2,b=3,c;
