@@ -6,6 +6,7 @@ import urllib.parse
 import re
 import random
 from youtube_search import YoutubeSearch
+import sys
 import os
 
 #lang_number[0],lang_name[1],lang_compiler[2],compiler_arguement[3]
@@ -324,4 +325,4 @@ async def on_message(message):
             for link in links:
                 await message.channel.send(link[:2000])
 
-client.run(input("Enter Bot Token:"))
+client.run(sys.argv[1])
