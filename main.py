@@ -6,6 +6,7 @@ import urllib.parse
 import re
 import random
 from youtube_search import YoutubeSearch
+import sys
 import os
 
 
@@ -17,8 +18,6 @@ language_array = [
     ["6","c","gcc","source_file.c -o a.out"],
     ["7","c++","g++","source_file.cpp -o a.out"]
 ]
-
-TOKEN="ODE3Mzk2Mzc4NjY0OTYwMDEw.YEI5sw.GlkfZVczH7cZHRbQ8Vp4O57ZzHs"
 
 client = discord.Client()
 
@@ -158,7 +157,6 @@ def meme_me(num):
     memes=response.json()        
     return memes
 
-
 # c# , java , python, c , c++
 def find_error(full_error_string, index):
     if index == 0:
@@ -294,10 +292,8 @@ async def on_message(message):
     if any(message.content.startswith(language_array[index][2]) for index in range(len(language_array))):
         compiler_name = message.content.split('\n')[0]
         index = find_index(compiler_name)
-
         language_name = language_array[index][1]
         compiler = language_array[index][2]
-        #compiler_argument = language_array[index][3]
         if len(message.content.split("```"+language_name))>1:
             src=message.content.split("```"+language_name)[1].split("```")[0]
         else:
@@ -329,4 +325,4 @@ async def on_message(message):
             for link in links:
                 await message.channel.send(link[:2000])
 
-client.run(TOKEN)
+client.run(sys.argv[1])

@@ -2,11 +2,12 @@
 ## To Host our Bot:
 You need to install a number of packages:
 * `pip install discord`
+* `pip install lxml`
 * `pip install bs4`
 * `pip install youtube-search`
 ## Setup
-* <b>As a developer</b>: Go to Discord Developers Portal and make your own bot. Then run the python code in your favourite editor with the token of your bot. 
-* <b>As an admin of a server</b>: Invite the bot to your server. Simply get the invite link from the developer and you are done.
+* <b>As a host</b>: Go to Discord Developers Portal and make a bot. Then run this python code by entering `python3 main.py TOKEN` in your commandline console from the directory of this repo with the token of your bot.
+* <b>As an admin of a server</b>: Invite the bot to your server. Simply get the invite link from the host and you are done.
 * <b>As an user</b>: You can type `$help` and you will get a list of instructions how to use our bot.
 ## How to Use
 Code Compilation and Run: Available in 5 languages c#, java, python, c++, c<br>
@@ -26,4 +27,11 @@ eg `$github alexriderspy Web-Scraping main Moodle/moodleLogin.py 5 20`<br>
 Tired of coding? Don't fret I have refreshments too. Type `$comic` and see what happens XD<br>
 Missing Youtube? I have it here for you too. Type `$youtube <search-query>` and enjoy yourselves ;)<br>
 Hope you enjoy your journey with me :)<br>
-![Example](/Demo.png)
+![Example](/examples/rex.png)
+![Example](/examples/demo.png)
+![Example](/examples/stack.png)
+![Example](/examples/duck.png)
+![Example](/examples/codechef.png)
+![Example](/examples/github.png)
+![Example](/examples/comic.png)
+![Example](/examples/youtube.png)
