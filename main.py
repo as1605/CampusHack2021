@@ -69,23 +69,23 @@ def duck(str, n=5):
 
 def demo(s):
     if s=='c':
-        with open('bot_c.txt') as f:
+        with open('demo/bot_c.txt') as f:
             lines=f.read()
             return lines
     elif s=='c++':
-        with open('bot_c++.txt') as f:
+        with open('demo/bot_c++.txt') as f:
             lines=f.read()
             return lines
     elif s=='python':
-        with open('bot_python.txt') as f:
+        with open('demo/bot_python.txt') as f:
             lines=f.read()
             return lines
     elif s=='c#':
-        with open('bot_c#.txt') as f:
+        with open('demo/bot_c#.txt') as f:
             lines=f.read()
             return lines
     elif s=='java':
-        with open('bot_java.txt') as f:
+        with open('demo/bot_java.txt') as f:
             lines=f.read()
             return lines
         
