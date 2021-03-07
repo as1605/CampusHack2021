@@ -207,9 +207,15 @@ async def on_message(message):
         language_name = language_array[index][1]
         compiler = language_array[index][2]
         compiler_arguement = language_array[index][3]
-
-
-        judge= rex(message.content.split("```"+language_name)[1],message.content.split("```txt")[1],compiler)
+        if len(message.content.split("```"+language_name))>1:
+            src=message.content.split("```"+language_name)[1].split("```")[0]
+        else:
+            src=message.content.split("```")[1]
+        if len(message.content.split("```"))>3:
+            inp=message.content.split("```")[3]
+        else:
+            inp=""
+        judge= rex(src,inp,compiler)
 
         if judge["Result"]!=None:
             await message.channel.send("```"+judge["Result"][:2000]+"```")
