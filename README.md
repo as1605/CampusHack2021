@@ -1,8 +1,6 @@
 # Campus Hackathon 2021
-
+Developed with :heart: by @as1605 (Aditya Singh), @alexriderspy (Sreemanti Dey) and @awesomepaneer (Raj Shah) [Team Blind_Guess]
 ## Meet Our Brand New Bot CodeAssist- The most powerful bot of the 21st century
-## Developed with :heart: by Aditya Singh as1605, Sreemanti Dey alexriderspy, Raj Shah awesomepaneer 
-
 ## To Host our Bot:
 You need to install a number of packages:
 * `pip install discord`
