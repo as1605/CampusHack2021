@@ -4,6 +4,7 @@ import json
 from bs4 import BeautifulSoup
 import urllib.parse
 import re
+from youtube_search import YoutubeSearch
 
 #lang_number[0],lang_name[1],lang_compiler[2],compiler_arguement[3]
 language_array = [
@@ -153,6 +154,16 @@ def codechef(id,beg,end):
         i+=1
     return a
 
+def youtube(search_query):
+    results = YoutubeSearch(search_query,max_results=3).to_dict()
+    links = []
+    for result in results:
+        url_suffix = result['url_suffix']
+        link = "https://www.youtube.com" + url_suffix
+        links.append(link)
+    return links
+    
+
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
@@ -196,6 +207,7 @@ async def on_message(message):
         await message.channel.send(out[:2000])
     
     if message.content.lower().startswith("codechef"):
+    
         str = message.content.split(" ")
         id = str[1]
         beg = int(str[2])
@@ -209,6 +221,12 @@ async def on_message(message):
             out+=f'{newline}{line}'
         out+="```"
         await message.channel.send(out[:2000])
+
+    if message.content.lower().startswith("$youtube"):
+        search_query = message.content.split("$youtube ")[1]
+        links = youtube(search_query)
+        for link in links:
+            await message.channel.send(link)
 
     if any(message.content.startswith(language_array[index][2]) for index in range(len(language_array))):
         compiler_name = message.content.split('\n')[0]
