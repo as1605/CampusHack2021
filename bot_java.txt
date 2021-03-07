@@ -1,5 +1,5 @@
 javac
-```java
+```
 import java.util.*;
 import java.lang.*;
  class Rextester
@@ -17,6 +17,6 @@ rex.Show();
 System.out.println(1);
 }
 }
-```java
+```
 ```txt
 6```txt

@@ -1,10 +1,11 @@
-gcc```c
+gcc
+```
 #include <stdio.h>
 int main()
 {
-    printf("Hello World");
+    printf("Hello World")
+
     return 0;
 }
-```c
-```txt
-6```txt
+
+```

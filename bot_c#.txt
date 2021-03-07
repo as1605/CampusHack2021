@@ -1,12 +1,19 @@
 csc
-```c#
+```
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
-#include <stdio.h>
-int main()
+namespace Rextester
 {
-    printf("Hello World");
-    return 0;
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            //Your code goes here
+            Console.WriteLine("Hello, world!");
+        }
+    }
 }
-```c#
-```txt
-6```txt
+```
